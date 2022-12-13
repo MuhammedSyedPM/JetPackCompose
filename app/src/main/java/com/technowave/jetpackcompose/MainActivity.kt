@@ -23,8 +23,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.technowave.jetpackcompose.ui.theme.JetPackComposeTheme
 import com.technowave.jetpackcompose.ui.theme.LoginBackgroundColor
+import com.technowave.jetpackcompose.views.HomeScreen
 import com.technowave.jetpackcompose.views.LoginView
 
 
@@ -38,17 +44,48 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    LoginView()
+                    MyNavigation()
                 }
             }
         }
     }
 }
 
+@Composable
+fun MyNavigation() {
+    val navController  = rememberNavController()
+    NavHost(navController = navController, startDestination = "login"){
+        composable(route = "login"){
+            LoginView(navController)
+        }
+        composable(
+            route = "home/{username}/{password}",
+            arguments = listOf(
+                navArgument("username"){
+                    type = NavType.StringType
+                    defaultValue = "noName"
+                    nullable = true
+                },
+                navArgument("password"){
+                    type = NavType.StringType
+                    defaultValue = "noName"
+                    nullable = true
+                }
+            )
+        ){
+            HomeScreen(
+                username = it.arguments?.getString("username"),
+                password = it.arguments?.getString("password")
+            )
+        }
+    }
+
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     JetPackComposeTheme {
-        LoginView()
+        //LoginView()
     }
 }

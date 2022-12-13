@@ -1,6 +1,5 @@
 package com.technowave.jetpackcompose.views
 
-import android.graphics.Paint.Align
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -22,13 +20,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.technowave.jetpackcompose.R
 import com.technowave.jetpackcompose.ui.theme.JetPackComposeTheme
 import com.technowave.jetpackcompose.ui.theme.LoginBackgroundColor
 
 
 @Composable
-fun LoginView() {
+fun LoginView(navController: NavController) {
     var username by remember {
         mutableStateOf("")
     }
@@ -102,7 +101,9 @@ fun LoginView() {
                 Box(
                     modifier = Modifier
                         .background(Color.Magenta)
-                        .clickable { },
+                        .clickable {
+                                   navController.navigate("home/$username/$password")
+                        },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(text = "Login", color = Color.White)
@@ -126,7 +127,8 @@ fun LoginView() {
                     textAlign = TextAlign.End,
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
-                        .padding(end = 20.dp)
+                        .padding(end = 20.dp),
+                            fontSize = 20.sp
                 )
             }
         }
@@ -139,6 +141,6 @@ fun LoginView() {
 @Composable
 fun LoginViewPreview() {
     JetPackComposeTheme() {
-        LoginView()
+       // LoginView()
     }
 }
