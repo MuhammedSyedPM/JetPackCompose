@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.technowave.jetpackcompose.R
+import com.technowave.jetpackcompose.navigation.MyRoute
 import com.technowave.jetpackcompose.ui.theme.JetPackComposeTheme
 import com.technowave.jetpackcompose.ui.theme.LoginBackgroundColor
 
@@ -102,7 +103,7 @@ fun LoginView(navController: NavController) {
                     modifier = Modifier
                         .background(Color.Magenta)
                         .clickable {
-                                   navController.navigate("home/$username/$password")
+                                   navController.navigate(MyRoute.Home.withArgs(username ,password))
                         },
                     contentAlignment = Alignment.Center
                 ) {
